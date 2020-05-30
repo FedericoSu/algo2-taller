@@ -86,13 +86,26 @@ public:
     }
 
 private:
-
+    int longitud_;
     struct Nodo {
-        // Completar
+        Nodo(const int& elem);
+        int valor;
+        Nodo* next;
+        Nodo* prev;
     };
+    Nodo *header;
+    Nodo *tailer;
 
-    // Completar
+    Nodo * buscarIesimo_(Nat i);
+    void eliminarNodo(Nodo* n);
 };
+
+Lista::Nodo::Nodo(const int& elem) : valor(elem) {
+    next = nullptr;
+    prev = nullptr;
+};
+
+
 
 #include "Lista.hpp"
 
