@@ -78,7 +78,7 @@ template <class T>
 void Conjunto<T>::remover(const T& clave) {
     if (pertenece(clave)) { // me aseguro que lo que quiero borrar existe
         if(cardinal() == 1){
-            delete _raiz;
+            delete (_raiz);
             _raiz = nullptr;
         } else {
             eliminacion(nullptr, 2, _raiz, clave);
@@ -91,7 +91,7 @@ template <class T>
 void Conjunto<T>::eliminacion(Nodo* padre, int lado, Nodo* actual, T clave){
     if (clave == actual->valor){// encontre el nodo a borrar
         if(actual->izq == nullptr && actual->der == nullptr){// si el nodo a borrar es una hoja...
-            delete actual;
+            delete (actual);
             if (lado == 0){
                 padre->izq= nullptr;
             } else {
