@@ -13,7 +13,7 @@ template <class T>
 Conjunto<T>::~Conjunto() {
     int foo = cantNodos_;
     vector<Nodo*> vectNod;
-    vectNod.reserve(foo);
+    //vectNod.reserve(foo);
     MorrisTraversal(vectNod);
     for (int i = 0; i < foo; ++i) {
         remover(vectNod[i]->valor);
@@ -119,7 +119,7 @@ void Conjunto<T>::eliminacion(Nodo* padre, int lado, Nodo* actual, T clave){
 template <class T>
 const T& Conjunto<T>::siguiente(const T& elem){
     vector<Nodo*> vect;
-    vect.reserve(cantNodos_);
+    //vect.reserve(cantNodos_);
     MorrisTraversal(vect);
     bool out = false;
     int i = 0;
