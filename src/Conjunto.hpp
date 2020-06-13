@@ -11,12 +11,8 @@ Conjunto<T>::Conjunto() {
 
 template <class T>
 Conjunto<T>::~Conjunto() {
-    int foo = cantNodos_;
-    vector<Nodo*> vectNod;
-    //vectNod.reserve(foo);
-    MorrisTraversal(vectNod);
-    for (int i = 0; i < foo; ++i) {
-        remover(vectNod[i]->valor);
+    while(_raiz != nullptr){
+        remover(_raiz->valor);
     }
 }
 
