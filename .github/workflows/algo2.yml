@@ -22,3 +22,4 @@ jobs:
 
     - name: Memory Leaks Check
       run: make correrValgrind
+      if: ${{ success() || failure() }}
