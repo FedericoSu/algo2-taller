@@ -61,7 +61,7 @@ class Conjunto
             Nodo* izq;
             Nodo* der;
         };
-        Nodo* _raiz;
+        Nodo *_raiz;
         unsigned int cantNodos_;
         void eliminacion(Nodo* padre, int lado, Nodo* actual, T valor);
         T& minimoParticular(Nodo* actual);

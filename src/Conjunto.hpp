@@ -1,4 +1,3 @@
-#include <stack>
 #include "Conjunto.h"
 
 using namespace std;
@@ -11,9 +10,7 @@ Conjunto<T>::Conjunto() {
 
 template <class T>
 Conjunto<T>::~Conjunto() {
-    while(_raiz != nullptr){
-        remover(_raiz->valor);
-    }
+    while(_raiz != nullptr){remover(_raiz->valor);}
 }
 
 template <class T>
@@ -67,14 +64,11 @@ void Conjunto<T>::insertar(const T& clave) {
     }
 }
 
-
-
-
 template <class T>
 void Conjunto<T>::remover(const T& clave) {
     if (pertenece(clave)) { // me aseguro que lo que quiero borrar existe
         if(cardinal() == 1){
-            delete (_raiz);
+            delete _raiz;
             _raiz = nullptr;
         } else {
             eliminacion(nullptr, 2, _raiz, clave);
@@ -87,8 +81,8 @@ template <class T>
 void Conjunto<T>::eliminacion(Nodo* padre, int lado, Nodo* actual, T clave){
     if (clave == actual->valor){// encontre el nodo a borrar
         if(actual->izq == nullptr && actual->der == nullptr){// si el nodo a borrar es una hoja...
-            delete (actual);
-            if (lado == 0){
+            delete actual; // ...borralo y...
+            if (lado == 0){ // ... decile a su padre que el hijo no existe mas
                 padre->izq= nullptr;
             } else {
                 padre->der = nullptr;
@@ -115,7 +109,7 @@ void Conjunto<T>::eliminacion(Nodo* padre, int lado, Nodo* actual, T clave){
 template <class T>
 const T& Conjunto<T>::siguiente(const T& elem){
     vector<Nodo*> vect;
-    //vect.reserve(cantNodos_);
+    vect.reserve(cantNodos_);
     MorrisTraversal(vect);
     bool out = false;
     int i = 0;
@@ -154,7 +148,6 @@ void Conjunto<T>::MorrisTraversal(vector<Conjunto<T>::Nodo*>& v){
     }
 }
 
-
 template <class T>
 const T& Conjunto<T>::minimo() const {
     Nodo* detector = _raiz;
@@ -169,8 +162,6 @@ const T& Conjunto<T>::minimo() const {
     return detector->valor;
 }
 
-
-
 template <class T>
 T& Conjunto<T>::minimoParticular(Nodo* actual){
         Nodo* detector = actual;
@@ -184,7 +175,6 @@ T& Conjunto<T>::minimoParticular(Nodo* actual){
         }
         return detector->valor;
 }
-
 
 template <class T>
 const T& Conjunto<T>::maximo() const {
@@ -214,7 +204,6 @@ T& Conjunto<T>::maximoParticular(Nodo* actual){
     return detector->valor;
 }
 
-
 template <class T>
 unsigned int Conjunto<T>::cardinal() const {
     return cantNodos_;
@@ -225,4 +214,3 @@ void Conjunto<T>::mostrar(std::ostream&) const {
     // OPCIONAL
     assert(false);
 }
-
