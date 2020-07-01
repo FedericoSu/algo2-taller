@@ -31,9 +31,11 @@ string_map<T>& string_map<T>::operator=(const string_map<T>& d) {//Busco agarrar
 template <typename T>
 string_map<T>::~string_map(){
     // COMPLETAR
-
-    //delete raiz;
-
+    vector<string> clavesABorrar = _claves;
+    for (int i = 0; i < clavesABorrar.size(); ++i) {
+        erase(clavesABorrar[i]);
+    }
+    delete raiz;
 }
 
 template <typename T>
