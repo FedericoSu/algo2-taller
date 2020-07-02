@@ -13,7 +13,6 @@ string_map<T>::string_map(const string_map<T>& aCopiar) : string_map() { *this =
 template <typename T>
 string_map<T>& string_map<T>::operator=(const string_map<T>& d) {//Busco agarrar la data de d y "copiarla"
     vector<string> estable = this->_claves;
-
     //ELIMINO DATA VIEJA
     for (int i = 0; i < estable.size(); ++i){
         erase(_claves[i]); // borro lo que haya en el this
@@ -24,13 +23,11 @@ string_map<T>& string_map<T>::operator=(const string_map<T>& d) {//Busco agarrar
     for (int j = 0; j < clavesAUbicar.size(); ++j) {
         insert(make_pair(clavesAUbicar[j], d.at((clavesAUbicar[j]))));
     }
-    //
     return *this;
 }
 
 template <typename T>
 string_map<T>::~string_map(){
-    // COMPLETAR
     vector<string> clavesABorrar = _claves;
     for (int i = 0; i < clavesABorrar.size(); ++i) {
         erase(clavesABorrar[i]);
@@ -42,11 +39,10 @@ template <typename T>
 void string_map<T>::insert(const pair<string, T>& pst){
     int slong = (pst.first).size();
 
-    T* valor = new T(pst.second);
+    T* valor = new T(pst.second); // <---- aqui
 
     if (slong == 0) { // Si mi string es "", inserto el "" en la raiz.
         raiz->definicion = valor;
-        if(count(pst.first) == 0){_size++; _claves.push_back(pst.first);}
     } else { // Sino..
         Nodo *actual = raiz;
         for (int j = 0; j < slong; ++j){
@@ -54,6 +50,7 @@ void string_map<T>::insert(const pair<string, T>& pst){
             if ((actual->siguientes[int(pst.first[j])]) != nullptr){
                 if (j == slong - 1) {
                     actual = actual->siguientes[int(pst.first[j])]; //agregado 1/2 pelo
+                    if(count(pst.first) == 1){delete actual->definicion; actual->definicion = nullptr;} //ojo
                     actual->definicion = valor;
                     found = true;
                 } else {
@@ -72,8 +69,8 @@ void string_map<T>::insert(const pair<string, T>& pst){
                 }
             }
         }
-        if(count(pst.first) == 0){_size++; _claves.push_back(pst.first);}
     }
+    if(count(pst.first) == 0){_size++; _claves.push_back(pst.first);}
 }
 
 template <typename T>
@@ -175,7 +172,7 @@ void string_map<T>::erase(const string& clave) {
             actual->definicion = nullptr;
 
 
-        } else { // Si no tiene hijos
+        } else { // Si no tiene hijos...
 
             //Borro entre la ultima bif y el actual
             bool fput = true;
@@ -185,8 +182,9 @@ void string_map<T>::erase(const string& clave) {
                 ultBif->siguientes[int(clave[ultBifValor+1])] = nullptr; // lo borro de siguientes
                 if(!fput){
                     delete ultBif; //deleteo el nodo
+                } else {
+                    fput = false;
                 }
-                fput = false;
                 ultBif = adelantado;
                 if(ultBif == actual){
                     delete ultBif->definicion;
@@ -198,12 +196,10 @@ void string_map<T>::erase(const string& clave) {
     } //end long if
 
     // Borro el elemento de _claves:
-    vector<string> copia = _claves;
-    //_claves.clear(); // ¿Puede fallar? (Leaks)
     vector<string> final;
-    for (int i = 0; i < copia.size(); ++i) {
-        if(copia[i] != clave){
-            final.push_back(copia[i]);
+    for (int i = 0; i < _claves.size(); ++i) {
+        if(_claves[i] != clave){
+            final.push_back(_claves[i]);
         }
     }
     _claves = final;
