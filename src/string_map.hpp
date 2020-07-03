@@ -39,18 +39,18 @@ template <typename T>
 void string_map<T>::insert(const pair<string, T>& pst){
     int slong = (pst.first).size();
 
-    T* valor = new T(pst.second); // <---- aqui
+    T* valor = new T(pst.second);
 
     if (slong == 0) { // Si mi string es "", inserto el "" en la raiz.
         raiz->definicion = valor;
-    } else { // Sino..
+    } else { // Sino voy a ir recorriendo, y si hay un camino previo lo sigo. Caso contrario lo voy armo.
         Nodo *actual = raiz;
         for (int j = 0; j < slong; ++j){
             bool found = false;
             if ((actual->siguientes[int(pst.first[j])]) != nullptr){
-                if (j == slong - 1) {
-                    actual = actual->siguientes[int(pst.first[j])]; //agregado 1/2 pelo
-                    if(count(pst.first) == 1){delete actual->definicion; actual->definicion = nullptr;} //ojo
+                if (j == slong - 1) { // Caso end
+                    actual = actual->siguientes[int(pst.first[j])];
+                    if(count(pst.first) == 1){delete actual->definicion; actual->definicion = nullptr;}
                     actual->definicion = valor;
                     found = true;
                 } else {
@@ -70,7 +70,7 @@ void string_map<T>::insert(const pair<string, T>& pst){
             }
         }
     }
-    if(count(pst.first) == 0){_size++; _claves.push_back(pst.first);}
+    if(count(pst.first) == 0){_size++; _claves.push_back(pst.first);} //Si la palabra no estaba, la sumo y la agrego a mis claves.
 }
 
 template <typename T>
@@ -92,7 +92,6 @@ int string_map<T>::count(const string& clave) const{ // ME DA SI ESTA O NO
 template <typename T>
 const T& string_map<T>::at(const string& clave) const {
     // Pre: La clave esta definida
-    // Basado en el count
     T* res = raiz->definicion;
     Nodo* actual = raiz;
     for (int j = 0; j < clave.size(); ++j) {
@@ -110,7 +109,6 @@ const T& string_map<T>::at(const string& clave) const {
 template <typename T>
 T& string_map<T>::at(const string& clave) {
     // Pre: La clave esta definida
-    // Basado en el count
    T* res = raiz->definicion;
    Nodo* actual = raiz;
    for (int j = 0; j < clave.size(); ++j) {
@@ -138,6 +136,7 @@ void string_map<T>::erase(const string& clave) {
     } else { // Sino..
 
             //Busco el ultimo Nodo y la ultBif(ultima bifurcacion)
+            //Seteo como mi primera bifurcacion la raiz (Caso Base)
             Nodo* ultBif = raiz;
             int ultBifValor = -1;
 
@@ -207,31 +206,7 @@ void string_map<T>::erase(const string& clave) {
 }
 
 template <typename T>
-int string_map<T>::size() const{
-    return _size;
-}
+int string_map<T>::size() const{return _size;}
 
 template <typename T>
-bool string_map<T>::empty() const{
-    return (_size == 0);
-}
-
-//Del count
-//bool bres = false;
-/*   if (_size != 0){
-     if (clave.size() == 0){
-         bres = (raiz->definicion != nullptr);
-     } else {
-         Nodo* actual = raiz;
-         for (int j = 0; j < clave.size(); ++j) {
-             if ((actual->siguientes[int(clave[j])]) != nullptr){
-                 if (j == clave.size() - 1){
-                     actual = actual->siguientes[int(clave[j])]; //TESTING
-                     bres = (actual->definicion != nullptr);
-                 } else {
-                     actual = actual->siguientes[int(clave[j])];
-                 }
-             }
-         }
-     }
- }*/
+bool string_map<T>::empty() const{return (_size == 0);}

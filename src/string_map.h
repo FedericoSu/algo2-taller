@@ -90,7 +90,7 @@ private:
 
     Nodo* raiz;
     int _size;
-    vector<string> _claves;
+    vector<string> _claves; //Vector de las claves de mi dicc
 };
 
 #include "string_map.hpp"
